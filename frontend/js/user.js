@@ -22,31 +22,55 @@ async function loadHomeServices() {
         allCard.className = 'category-card active';
         allCard.id = 'cat-card-0';
         allCard.innerHTML = `
-            <div class="category-icon">🛠️</div>
+            <div class="category-icon-wrapper cat-icon-all">
+                <span class="category-icon">🛠️</span>
+            </div>
             <div class="category-name">All Services</div>
-            <div class="category-count">Show all</div>
+            <div class="category-pill-wrap">
+                <span class="cat-pill all-pill">Browse all</span>
+            </div>
         `;
         allCard.onclick = () => selectCategory(0);
         grid.appendChild(allCard);
 
-        const iconMap = {
-            'zap': '⚡',
-            'droplet': '💧',
-            'hammer': '🔨',
-            'brush': '🖌️',
-            'tool': '🔧',
-            'sparkles': '✨'
+        const iconStyleMap = {
+            'Electrician': { icon: '⚡', styleClass: 'cat-icon-electric' },
+            'Plumber': { icon: '💧', styleClass: 'cat-icon-plumber' },
+            'Carpenter': { icon: '🔨', styleClass: 'cat-icon-carpenter' },
+            'Painter': { icon: '🎨', styleClass: 'cat-icon-painter' },
+            'Mechanic': { icon: '🔧', styleClass: 'cat-icon-mechanic' },
+            'Home Cleaning': { icon: '✨', styleClass: 'cat-icon-cleaning' },
+            'Solar': { icon: '☀️', styleClass: 'cat-icon-solar' }
+        };
+
+        const fallbackMap = {
+            'zap': { icon: '⚡', styleClass: 'cat-icon-electric' },
+            'droplet': { icon: '💧', styleClass: 'cat-icon-plumber' },
+            'hammer': { icon: '🔨', styleClass: 'cat-icon-carpenter' },
+            'brush': { icon: '🎨', styleClass: 'cat-icon-painter' },
+            'tool': { icon: '🔧', styleClass: 'cat-icon-mechanic' },
+            'sparkles': { icon: '✨', styleClass: 'cat-icon-cleaning' }
         };
 
         services.forEach(s => {
             const card = document.createElement('div');
             card.className = 'category-card';
             card.id = `cat-card-${s.id}`;
-            const iconEmoji = iconMap[s.icon] || '🛠️';
+
+            const meta = iconStyleMap[s.name] || fallbackMap[s.icon] || { icon: '🛠️', styleClass: 'cat-icon-all' };
+            const count = parseInt(s.provider_count, 10) || 0;
+            const pillHtml = count > 0 
+                ? `<span class="cat-pill has-providers"><span class="cat-dot"></span>${count} Available</span>`
+                : `<span class="cat-pill no-providers">0 Available</span>`;
+
             card.innerHTML = `
-                <div class="category-icon">${iconEmoji}</div>
+                <div class="category-icon-wrapper ${meta.styleClass}">
+                    <span class="category-icon">${meta.icon}</span>
+                </div>
                 <div class="category-name">${escapeHtml(s.name)}</div>
-                <div class="category-count">${s.provider_count} Available</div>
+                <div class="category-pill-wrap">
+                    ${pillHtml}
+                </div>
             `;
             card.onclick = () => selectCategory(s.id);
             grid.appendChild(card);
@@ -61,6 +85,18 @@ function selectCategory(serviceId) {
     const activeEl = document.getElementById(`cat-card-${serviceId}`);
     if (activeEl) activeEl.classList.add('active');
     loadProviders();
+
+    // Scroll so Available Service Providers reaches the very top of the screen (under navbar)
+    const target = document.getElementById('providers-section');
+    if (target) {
+        const nav = document.querySelector('.navbar');
+        const navHeight = nav ? nav.offsetHeight : 70;
+        const targetTop = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        window.scrollTo({
+            top: targetTop,
+            behavior: 'smooth'
+        });
+    }
 }
 
 // Search input debounce/trigger

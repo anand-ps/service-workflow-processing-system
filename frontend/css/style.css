@@ -232,6 +232,11 @@ body {
     padding-bottom: 40px;
 }
 
+#providers-section {
+    min-height: calc(100vh - 70px);
+    scroll-margin-top: 70px;
+}
+
 .section-header {
     margin-bottom: 30px;
     display: flex;
@@ -254,42 +259,116 @@ body {
 /* Categories Grid */
 .categories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 16px;
 }
 
 .category-card {
     background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
-    padding: 20px 16px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 14px;
+    padding: 18px 12px 14px 12px;
     text-align: center;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
     color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-.category-card:hover, .category-card.active {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px -5px rgba(30, 64, 175, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+    border-color: #93c5fd;
+}
+
+.category-card.active {
     border-color: var(--primary);
+    background: linear-gradient(180deg, #f0f7ff 0%, #ffffff 100%);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15), 0 8px 16px -4px rgba(30, 64, 175, 0.12);
+    transform: translateY(-2px);
+}
+
+/* Category Icon Wrapper Bubble */
+.category-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    transition: transform 0.2s ease;
+}
+
+.category-card:hover .category-icon-wrapper {
+    transform: scale(1.08);
 }
 
 .category-icon {
-    font-size: 2rem;
-    margin-bottom: 10px;
+    font-size: 1.6rem;
+    line-height: 1;
 }
+
+/* Category Icon Colors */
+.cat-icon-all       { background: #eff6ff; border: 1px solid #dbeafe; }
+.cat-icon-electric  { background: #fffbeb; border: 1px solid #fef3c7; }
+.cat-icon-plumber   { background: #f0fdf4; border: 1px solid #dcfce7; }
+.cat-icon-carpenter { background: #fff7ed; border: 1px solid #ffedd5; }
+.cat-icon-painter   { background: #fdf2f8; border: 1px solid #fce7f3; }
+.cat-icon-mechanic  { background: #f1f5f9; border: 1px solid #e2e8f0; }
+.cat-icon-cleaning  { background: #ecfeff; border: 1px solid #cffafe; }
+.cat-icon-solar     { background: #fefce8; border: 1px solid #fef08a; }
 
 .category-name {
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 4px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1e293b;
+    margin-bottom: 8px;
+    line-height: 1.3;
 }
 
-.category-count {
-    font-size: 0.8rem;
-    color: var(--text-muted);
+/* Availability Pill Badges */
+.category-pill-wrap {
+    margin-top: auto;
+}
+
+.cat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.2px;
+}
+
+.cat-pill.all-pill {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.cat-pill.has-providers {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.cat-pill.has-providers .cat-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #16a34a;
+    display: inline-block;
+}
+
+.cat-pill.no-providers {
+    background: #f1f5f9;
+    color: #64748b;
 }
 
 /* Providers Grid */
@@ -771,24 +850,26 @@ footer {
     /* 2-Column Grid on Mobile for Categories */
     .categories-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        gap: 12px;
     }
 
     .category-card {
-        padding: 14px 10px;
+        padding: 16px 10px 14px 10px;
+    }
+
+    .category-icon-wrapper {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        margin-bottom: 8px;
     }
 
     .category-icon {
-        font-size: 1.6rem;
-        margin-bottom: 6px;
+        font-size: 1.4rem;
     }
 
     .category-name {
         font-size: 0.88rem;
-    }
-
-    .category-count {
-        font-size: 0.75rem;
     }
 
     /* Providers Grid */
