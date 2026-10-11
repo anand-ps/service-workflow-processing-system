@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - System Management & Reports</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <span class="brand-icon">⚙️</span>
+                <span>LocalServe <small style="font-size: 0.75rem; color: #475569; font-weight: normal;">(Admin Console)</small></span>
+            </a>
+            <div id="nav-user-area" class="nav-links">
+                <button onclick="handleLogout()" class="btn btn-danger btn-sm">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container section">
+        <div class="section-header">
+            <div>
+                <h1 class="section-title">Administration Dashboard</h1>
+                <p class="section-subtitle">System metrics, provider approvals, and analytical reports</p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <button onclick="openAddServiceModal()" class="btn btn-primary btn-sm">+ Add Service Category</button>
+                <button onclick="loadAdminDashboard()" class="btn btn-outline btn-sm">🔄 Refresh Data</button>
+            </div>
+        </div>
+
+        <!-- 1. Platform Metric Cards (User Activity Reports) -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-title">Total Customers</div>
+                <div id="stat-total-customers" class="stat-value">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Active Providers</div>
+                <div id="stat-active-providers" class="stat-value" style="color: #15803d;">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Pending Approvals</div>
+                <div id="stat-pending-approvals" class="stat-value" style="color: #b45309;">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Total Bookings</div>
+                <div id="stat-total-bookings" class="stat-value" style="color: #1e40af;">0</div>
+            </div>
+        </div>
+
+        <!-- 2. Provider Approval Queue -->
+        <section style="margin-bottom: 40px;">
+            <h2 style="font-size: 1.25rem; margin-bottom: 14px;">Provider Verification Queue</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Applicant</th>
+                            <th>Service Category</th>
+                            <th>Contact Info</th>
+                            <th>Experience & Rate</th>
+                            <th>Operating Location</th>
+                            <th>Verification Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pending-providers-body">
+                        <!-- Populated by admin.js -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. System Reports Section (Section 7 of Synopsis) -->
+        <div class="reports-grid">
+            <!-- Service Booking Reports -->
+            <div>
+                <h2 style="font-size: 1.25rem; margin-bottom: 14px;">Booking Status Breakdown</h2>
+                <div class="table-container">
+                    <table class="table-compact">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Total Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="report-status-body">
+                            <!-- Populated by admin.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Provider Performance Reports -->
+            <div>
+                <h2 style="font-size: 1.25rem; margin-bottom: 14px;">Provider Performance Report</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Professional</th>
+                                <th>Category</th>
+                                <th>Area</th>
+                                <th>Total Jobs</th>
+                                <th>Completed</th>
+                                <th>Average Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody id="report-performance-body">
+                            <!-- Populated by admin.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Master Bookings Monitor -->
+        <section>
+            <h2 style="font-size: 1.25rem; margin-bottom: 14px;">Platform Bookings Audit Log</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Category</th>
+                            <th>Customer</th>
+                            <th>Provider</th>
+                            <th>Scheduled Date</th>
+                            <th>Status</th>
+                            <th>Problem Note</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-bookings-body">
+                        <!-- Populated by admin.js -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Add Service Category Modal -->
+    <div id="add-service-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add New Service Category</h3>
+                <button class="close-modal" onclick="closeAddServiceModal()">&times;</button>
+            </div>
+            <form onsubmit="submitAddServiceForm(event)">
+                <div class="form-group">
+                    <label for="service-name">Category Name *</label>
+                    <input type="text" id="service-name" class="form-control" placeholder="e.g. Pest Control" required>
+                </div>
+                <div class="form-group">
+                    <label for="service-desc">Description</label>
+                    <textarea id="service-desc" class="form-control" rows="2" placeholder="Brief summary of tasks covered..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="service-icon">Icon Style</label>
+                    <select id="service-icon" class="form-control">
+                        <option value="wrench">Wrench / Tool</option>
+                        <option value="zap">Electric / Zap</option>
+                        <option value="droplet">Plumbing / Droplet</option>
+                        <option value="sparkles">Cleaning / Sparkles</option>
+                        <option value="hammer">Wood / Hammer</option>
+                        <option value="brush">Painting / Brush</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    <button type="submit" class="btn btn-primary btn-block">Save Category</button>
+                    <button type="button" class="btn btn-outline" onclick="closeAddServiceModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>On-Demand Local Service Booking Application &bull; BCSP-064 Final Project</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js?v=2"></script>
+    <script src="js/auth.js?v=2"></script>
+    <script src="js/admin.js?v=2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAdminDashboard();
+        });
+    </script>
+</body>
+</html>

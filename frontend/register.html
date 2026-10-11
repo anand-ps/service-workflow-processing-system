@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Local Service Booking</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <span class="brand-icon">🔧</span>
+                <span>LocalServe</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="btn btn-outline btn-sm">Home</a>
+                <a href="login.html" class="btn btn-primary btn-sm">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="auth-box" style="max-width: 520px;">
+            <h2>Create an Account</h2>
+            <p class="subtitle">Join as a Customer or register as a Service Professional</p>
+
+            <div class="tabs">
+                <button type="button" id="tab-user" class="tab-btn active" onclick="switchRole('user')">I Need Services (Customer)</button>
+                <button type="button" id="tab-provider" class="tab-btn" onclick="switchRole('provider')">I Offer Services (Provider)</button>
+            </div>
+
+            <div id="alert-box" class="alert"></div>
+
+            <form onsubmit="onFormSubmit(event)">
+                <div class="form-group">
+                    <label for="reg-name">Full Name *</label>
+                    <input type="text" id="reg-name" class="form-control" placeholder="e.g. John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-email">Email Address *</label>
+                    <input type="email" id="reg-email" class="form-control" placeholder="name@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-phone">Contact Phone *</label>
+                    <input type="tel" id="reg-phone" class="form-control" placeholder="10-digit mobile number" required>
+                </div>
+
+                <!-- Provider-Specific Fields -->
+                <div id="provider-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="reg-service">Skill / Service Type *</label>
+                        <select id="reg-service" class="form-control">
+                            <option value="1">Electrician</option>
+                            <option value="2">Plumber</option>
+                            <option value="3">Carpenter</option>
+                            <option value="4">Painter</option>
+                            <option value="5">Mechanic</option>
+                            <option value="6">Home Cleaning</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="reg-experience">Experience (Years) *</label>
+                            <input type="number" id="reg-experience" class="form-control" min="0" max="50" value="2">
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-rate">Standard Hourly Rate (₹) *</label>
+                            <input type="number" id="reg-rate" class="form-control" min="50" step="10" value="300">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-location">Service Area / Location *</label>
+                        <input type="text" id="reg-location" class="form-control" placeholder="e.g. Sector 18, Central City">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-password">Password (Minimum 6 characters) *</label>
+                    <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 20px;">Complete Registration</button>
+            </form>
+
+            <div style="margin-top: 20px; text-align: center; font-size: 0.9rem;">
+                Already have an account? <a href="login.html" style="color: var(--primary); font-weight: 600;">Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        let currentRole = 'user';
+
+        function switchRole(role) {
+            currentRole = role;
+            const tabUser = document.getElementById('tab-user');
+            const tabProv = document.getElementById('tab-provider');
+            const provFields = document.getElementById('provider-fields');
+
+            if (role === 'provider') {
+                tabProv.classList.add('active');
+                tabUser.classList.remove('active');
+                provFields.style.display = 'block';
+            } else {
+                tabUser.classList.add('active');
+                tabProv.classList.remove('active');
+                provFields.style.display = 'none';
+            }
+        }
+
+        function onFormSubmit(e) {
+            handleRegisterSubmit(e, currentRole);
+        }
+    </script>
+</body>
+</html>

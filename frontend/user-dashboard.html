@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - Customer Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <span class="brand-icon">🔧</span>
+                <span>LocalServe</span>
+            </a>
+            <div id="nav-user-area" class="nav-links">
+                <button onclick="handleLogout()" class="btn btn-danger btn-sm">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container section">
+        <div class="section-header">
+            <div>
+                <h1 class="section-title">My Service Bookings</h1>
+                <p class="section-subtitle">Track real-time progress and review completed services</p>
+            </div>
+            <a href="index.html" class="btn btn-primary">+ Book New Service</a>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Service / Issue</th>
+                        <th>Professional</th>
+                        <th>Scheduled For</th>
+                        <th>Rate</th>
+                        <th>Current Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="user-bookings-body">
+                    <!-- Populated by user.js -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Rating & Feedback Modal -->
+    <div id="feedback-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Rate & Review Service</h3>
+                <button class="close-modal" onclick="closeFeedbackModal()">&times;</button>
+            </div>
+            <div style="margin-bottom: 16px;">
+                <p>How was your experience with <strong><span id="feedback-provider-name"></span></strong>?</p>
+            </div>
+            <form onsubmit="submitFeedbackForm(event)">
+                <div class="form-group" style="text-align: center;">
+                    <label style="margin-bottom: 8px;">Select Rating</label>
+                    <div id="star-widget" class="rating-stars" style="justify-content: center;">
+                        <span class="star selected" data-val="1" onclick="selectRating(1)">★</span>
+                        <span class="star selected" data-val="2" onclick="selectRating(2)">★</span>
+                        <span class="star selected" data-val="3" onclick="selectRating(3)">★</span>
+                        <span class="star selected" data-val="4" onclick="selectRating(4)">★</span>
+                        <span class="star selected" data-val="5" onclick="selectRating(5)">★</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedback-comment">Comments / Feedback *</label>
+                    <textarea id="feedback-comment" class="form-control" rows="3" placeholder="Share your experience (punctuality, quality of work, behaviour)..." required></textarea>
+                </div>
+
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    <button type="submit" class="btn btn-primary btn-block">Submit Feedback</button>
+                    <button type="button" class="btn btn-outline" onclick="closeFeedbackModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>On-Demand Local Service Booking Application &bull; BCSP-064 Final Project</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js?v=2"></script>
+    <script src="js/auth.js?v=2"></script>
+    <script src="js/user.js?v=2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserBookings();
+        });
+    </script>
+</body>
+</html>

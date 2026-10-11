@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Service Booking Application - BCSP-064</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <span class="brand-icon">🔧</span>
+                <span>LocalServe</span>
+            </a>
+            <div id="nav-user-area" class="nav-links">
+                <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+                <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Search Section -->
+    <header class="hero">
+        <div class="container">
+            <h1>Find Trusted Local Service Experts</h1>
+            <p>Book verified electricians, plumbers, carpenters, painters and mechanics in your neighborhood.</p>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search by service or area (e.g. Electrician, Whitefield)..." oninput="handleSearchInput()">
+                <button class="btn btn-primary" onclick="loadProviders()">Search</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Service Categories -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Popular Services</h2>
+                    <p class="section-subtitle">Select a category to filter verified service professionals</p>
+                </div>
+            </div>
+            <div id="categories-grid" class="categories-grid">
+                <!-- Dynamically loaded via user.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Verified Service Providers -->
+    <section class="section" style="background-color: #f1f5f9;">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Available Service Providers</h2>
+                    <p class="section-subtitle">Verified professionals ready to assist with transparent rates</p>
+                </div>
+            </div>
+            <div id="providers-grid" class="providers-grid">
+                <!-- Dynamically loaded via user.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Schedule Service Booking</h3>
+                <button class="close-modal" onclick="closeBookingModal()">&times;</button>
+            </div>
+            <div style="background: #eff6ff; padding: 12px; border-radius: 6px; margin-bottom: 16px;">
+                <p><strong>Professional:</strong> <span id="modal-provider-name"></span></p>
+                <p><strong>Service:</strong> <span id="modal-service-name"></span></p>
+                <p><strong>Standard Rate:</strong> <span id="modal-hourly-rate" style="color: #1e40af; font-weight: bold;"></span></p>
+            </div>
+            <form onsubmit="submitBookingForm(event)">
+                <div class="form-group">
+                    <label for="book-date">Preferred Date *</label>
+                    <input type="date" id="book-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="book-time">Preferred Time Slot *</label>
+                    <select id="book-time" class="form-control" required>
+                        <option value="09:00 AM - 11:00 AM">Morning (09:00 AM - 11:00 AM)</option>
+                        <option value="11:00 AM - 01:00 PM">Midday (11:00 AM - 01:00 PM)</option>
+                        <option value="02:00 PM - 04:00 PM">Afternoon (02:00 PM - 04:00 PM)</option>
+                        <option value="04:00 PM - 06:00 PM">Evening (04:00 PM - 06:00 PM)</option>
+                        <option value="06:00 PM - 08:00 PM">Night (06:00 PM - 08:00 PM)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="book-address">Service Location / Address *</label>
+                    <textarea id="book-address" class="form-control" rows="2" placeholder="House/Flat number, Building name, Street..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="book-desc">Problem Description *</label>
+                    <textarea id="book-desc" class="form-control" rows="3" placeholder="Describe the issue you need resolved..." required></textarea>
+                </div>
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
+                    <button type="button" class="btn btn-outline" onclick="closeBookingModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>On-Demand Local Service Booking Application &bull; BCSP-064 Final Project</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/user.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHomeServices();
+            loadProviders();
+        });
+    </script>
+</body>
+</html>
