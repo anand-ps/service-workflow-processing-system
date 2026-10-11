@@ -47,7 +47,12 @@ function renderNavbar() {
     const user = getStoredUser();
 
     if (user) {
+        const dashUrl = getDashboardUrlByRole(user.role);
+        let roleBadge = user.role.toUpperCase();
+        if (user.role === 'provider') roleBadge = 'PROVIDER';
+
         navRight.innerHTML = `
+            <a href="${dashUrl}" class="btn btn-outline btn-sm">Dashboard (${user.name})</a>
             <button onclick="handleLogout()" class="btn btn-danger btn-sm">Logout</button>
         `;
     } else {

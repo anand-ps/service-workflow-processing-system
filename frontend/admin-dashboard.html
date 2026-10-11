@@ -15,7 +15,7 @@
                 <span>LocalServe <small style="font-size: 0.75rem; color: #475569; font-weight: normal;">(Admin Console)</small></span>
             </a>
             <div id="nav-user-area" class="nav-links">
-                <button onclick="handleLogout()" class="btn btn-danger btn-sm">Logout</button>
+                <!-- Injected via auth.js -->
             </div>
         </div>
     </nav>
@@ -183,9 +183,9 @@
         </div>
     </footer>
 
-    <script src="js/config.js?v=2"></script>
-    <script src="js/auth.js?v=2"></script>
-    <script src="js/admin.js?v=2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             loadAdminDashboard();
