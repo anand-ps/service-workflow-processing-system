@@ -43,26 +43,10 @@
             <div style="margin-top: 24px; text-align: center; font-size: 0.9rem;">
                 Don't have an account? <a href="register.html" style="color: var(--primary); font-weight: 600;">Register here</a>
             </div>
-
-            <!-- Quick Demo Credentials Box for Evaluator/Viva -->
-            <div style="margin-top: 25px; padding: 12px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; font-size: 0.8rem;">
-                <p style="font-weight: bold; margin-bottom: 6px; color: #475569;">Quick Demo Credentials:</p>
-                <div style="display: flex; flex-direction: column; gap: 4px;">
-                    <div><button type="button" onclick="fillCreds('admin@services.com', 'admin123')" class="btn btn-outline btn-sm" style="padding: 2px 6px; font-size: 0.75rem;">Admin</button> admin@services.com / admin123</div>
-                    <div><button type="button" onclick="fillCreds('rahul@gmail.com', 'user123')" class="btn btn-outline btn-sm" style="padding: 2px 6px; font-size: 0.75rem;">Customer</button> rahul@gmail.com / user123</div>
-                    <div><button type="button" onclick="fillCreds('rajesh@electrician.com', 'provider123')" class="btn btn-outline btn-sm" style="padding: 2px 6px; font-size: 0.75rem;">Provider</button> rajesh@electrician.com / provider123</div>
-                </div>
-            </div>
         </div>
     </div>
 
     <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
-    <script>
-        function fillCreds(email, pass) {
-            document.getElementById('login-email').value = email;
-            document.getElementById('login-password').value = pass;
-        }
-    </script>
 </body>
 </html>
